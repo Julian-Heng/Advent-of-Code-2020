@@ -107,7 +107,8 @@ func readPassports(path string) ([]passport, error) {
     }
 
     file := string(bfile)
-    split := strings.Split(strings.TrimSpace(file), "\n\n")
+    delim := getNewline(file)
+    split := strings.Split(strings.TrimSpace(file), delim + delim)
 
     for _, s := range split {
         passports = append(passports, newPassport(s))
@@ -184,4 +185,14 @@ func regexMatch(p string, s string) bool {
         return false
     }
     return match
+}
+
+
+func getNewline(s string) string {
+    for _, v := range s {
+        if v == '\r' {
+            return "\r\n"
+        }
+    }
+    return "\n"
 }

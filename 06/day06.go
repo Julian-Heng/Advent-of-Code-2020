@@ -15,7 +15,8 @@ func main() {
         os.Exit(1)
     }
 
-    lines := strings.Split(strings.TrimSpace(str_file), "\n\n")
+    delim := getNewline(str_file)
+    lines := strings.Split(strings.TrimSpace(str_file), delim + delim)
     fmt.Println(solve1(lines))
     fmt.Println(solve2(lines))
 }
@@ -42,8 +43,9 @@ func solve1(ln []string) int {
 func solve2(ln []string) int {
     result := 0
 
+    delim := getNewline(ln[0])
     for _, l := range ln {
-        split := strings.Split(l, "\n")
+        split := strings.Split(l, delim)
         table := countLetters(split[0])
 
         for _, s := range split[1:] {
@@ -90,4 +92,14 @@ func read(path string) (string, error) {
 
     file := string(bfile)
     return file, err
+}
+
+
+func getNewline(s string) string {
+	for _, v := range s {
+		if v == '\r' {
+			return "\r\n"
+		}
+	}
+	return "\n"
 }
