@@ -25,8 +25,9 @@ func main() {
 
 func solve1(bags map[string]map[string]int) int {
     n := 0
+    seen := map[string]bool{}
     for k := range bags {
-        if traverse(bags, k) {
+        if traverse(bags, k, seen) {
             n++
         }
     }
@@ -35,33 +36,59 @@ func solve1(bags map[string]map[string]int) int {
 
 
 func solve2(bags map[string]map[string]int) int {
-    return traverse2(bags, "shiny gold")
+    seen := map[string]int{}
+    return traverse2(bags, "shiny gold", seen)
 }
 
 
-func traverse(bags map[string]map[string]int, bag string) bool {
+func traverse(
+    bags map[string]map[string]int,
+    bag string,
+    seen map[string]bool) bool {
+
+    for k := range seen {
+        if bag == k {
+            return seen[bag]
+        }
+    }
+
     for k := range bags[bag] {
         if k == "shiny gold" {
+            seen[bag] = true
             return true
         }
     }
 
     for k := range bags[bag] {
-        if traverse(bags, k) {
+        if traverse(bags, k, seen) {
+            seen[bag] = true
             return true
         }
     }
 
+    seen[bag] = false
     return false
 }
 
 
-func traverse2(bags map[string]map[string]int, bag string) int {
+func traverse2(
+    bags map[string]map[string]int,
+    bag string,
+    seen map[string]int) int {
+
+    for k := range seen {
+        if bag == k {
+            return seen[bag]
+        }
+    }
+
     n := 0
     for k := range bags[bag] {
         v := bags[bag][k]
-        n += v + (v * traverse2(bags, k))
+        n += v + (v * traverse2(bags, k, seen))
     }
+
+    seen[bag] = n
     return n
 }
 
