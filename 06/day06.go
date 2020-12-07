@@ -96,10 +96,10 @@ func read(path string) (string, error) {
 
 
 func getNewline(s string) string {
-	for _, v := range s {
-		if v == '\r' {
-			return "\r\n"
-		}
-	}
-	return "\n"
+    for _, v := range s {
+        if v == '\r' {
+            return "\r\n"
+        }
+    }
+    return "\n"
 }
