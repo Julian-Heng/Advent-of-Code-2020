@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 
-from math import prod
+try:
+    from math import prod
+except ImportError:
+    from functools import reduce
+    def prod(iter):
+        return reduce(lambda x, y: x * y, iter)
 
 
 def main():
