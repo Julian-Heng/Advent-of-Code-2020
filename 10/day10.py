@@ -6,10 +6,9 @@ from math import prod
 
 def main():
     with open("input", "r") as f:
-        nums = list(map(int, f.read().strip().splitlines()))
+        nums = sorted(map(int, f.read().strip().splitlines()))
 
-    nums.sort()
-    nums = [0] + nums + [max(nums) + 3]
+    nums = [0] + nums + [nums[-1] + 3]
     print(solve1(nums))
     print(solve2(nums))
 
@@ -24,7 +23,7 @@ def solve2(nums):
     i = -1
     for j in d:
         n = max(1, j - i - 2)
-        e = int(3 not in (nums[j] - nums[i+1], j - i))
+        e = int(nums[j] - nums[i+1] != 3 and j - i != 3)
         result *= (2 ** n) - e
         i = j
 

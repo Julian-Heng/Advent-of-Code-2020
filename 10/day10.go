@@ -54,8 +54,11 @@ func solve2(nums []int) int {
     i := -1
     for _, j := range d {
         n := max(1, j - i - 2)
-        e := btoi(! (nums[j] - nums[i+1] == 3 || j - i == 3))
-        result *= ipow(2, n) - e
+        e := 1
+        if nums[j] - nums[i+1] == 3 || j - i == 3 {
+            e = 0
+        }
+        result *= (1 << n) - e
         i = j
     }
 
@@ -92,32 +95,6 @@ func sliceAtoi(a []string) []int {
         }
 
         result = append(result, i)
-    }
-
-    return result
-}
-
-
-func btoi(b bool) int {
-    if b {
-        return 1
-    } else {
-        return 0
-    }
-}
-
-
-func ipow(n int, e int) int {
-    result := 1
-    for {
-        if (e & 1) != 0 {
-            result *= n
-        }
-        e >>= 1
-        if e == 0 {
-            break
-        }
-        n *= n
     }
 
     return result
