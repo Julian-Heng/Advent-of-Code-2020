@@ -9,9 +9,9 @@ import (
 
 type seat int
 const (
-    SEAT_EMPTY      seat = 0
-    SEAT_OCCUPIED   seat = 1
-    SEAT_FLOOR      seat = 2
+    SEAT_EMPTY    seat = 0
+    SEAT_OCCUPIED seat = 1
+    SEAT_FLOOR    seat = 2
 )
 
 
@@ -64,13 +64,13 @@ func solve(
                 adj_callback(before, x, y, width, height, func(s seat) bool {
                     if s == SEAT_OCCUPIED {
                         count++
+                        if count >= limit {
+                            after[i] = SEAT_EMPTY
+                            return false
+                        }
                     }
                     return true
                 })
-
-                if count >= limit {
-                    after[i] = SEAT_EMPTY
-                }
             }
         }
     }
