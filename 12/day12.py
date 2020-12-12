@@ -46,7 +46,7 @@ def solve2(lines):
             vals = deque(waypoint.values())
             index_offset = (m // 90) * (-1 if d == "L" else 1)
             vals.rotate(index_offset)
-            waypoint = {k: vals[i] for i, k in enumerate(waypoint.keys())}
+            waypoint = {k: v for k, v in zip(waypoint.keys(), vals)}
         elif d == "F":
             for k, v in waypoint.items():
                 dist[k] += m * v
