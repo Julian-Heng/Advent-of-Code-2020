@@ -53,7 +53,7 @@ def mod_inv(a, b):
 
         tmp = a
         a = b
-        b = tmp %b
+        b = tmp % b
 
         tmp = x0
         x0 = x1 - q * x0
