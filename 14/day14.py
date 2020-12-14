@@ -19,7 +19,6 @@ def parse(lines):
             instructions.append(l.split(" = ", 2)[-1])
         elif l.startswith("mem"):
             instructions.append(tuple(map(int, re.findall(r"\d+", l))))
-
     return instructions
 
 
@@ -48,27 +47,25 @@ def apply_mask(mask, val):
 
 
 def calculate_floating(mask, mem):
-    results = []
-    for i, j in zip(mask, list(bits(mem, pad=len(mask)))[::-1]):
+    mem_bits = list(bits(mem, pad=len(mask)))[::-1]
+    if mask[0] == "X":
+        results = [0, 1]
+    else:
+        m = int(mask[0])
+        results = [m if m == 1 else mem_bits[0]]
+
+    for i, j in zip(mask[1:], mem_bits[1:]):
         if i == "X":
-            if not results:
-                results.append(0)
-                results.append(1)
-            else:
-                _results = []
-                for r in results:
-                    _results.append((r << 1) ^ 0)
-                    _results.append((r << 1) ^ 1)
-                results = _results
+            for r in range(len(results)):
+                v = results[r]
+                results[r] = (v << 1) ^ 0
+                results.append((v << 1) ^ 1)
         else:
             m = int(i)
             a = m if m == 1 else j
-            if not results:
-                results.append(a)
-            else:
-                for r in range(len(results)):
-                    v = results[r]
-                    results[r] = (v << 1) ^ a
+            for r in range(len(results)):
+                v = results[r]
+                results[r] = (v << 1) ^ a
 
     return results
 
