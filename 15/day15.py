@@ -4,18 +4,20 @@
 def main():
     with open("input", "r") as f:
         nums = list(map(int, f.read().split(",")))
-    print(solve(nums[:], 2020))
-    print(solve(nums[:], 30000000))
+    print(solve(nums, 2020))
+    print(solve(nums, 30000000))
 
 
 def solve(nums, target):
     spoken = {}
-    num = nums.pop(0)
-    for turn in range(1, target):
-        if len(nums) > 0:
+    num = 0
+    for turn in range(0, target - 1):
+        if turn < len(nums) - 1:
+            num = nums[turn]
             spoken[num] = turn
-            num = nums.pop(0)
             continue
+        elif turn == len(nums) - 1:
+            num = nums[-1]
 
         if num not in spoken.keys():
             spoken[num] = turn
