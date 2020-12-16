@@ -32,11 +32,11 @@ def solve2(rules, ticket, nearby):
     valid = [i for i in nearby if all(j in r for j in i)]
 
     column_choices = list()
-    departure = list()
     for col in zip(*valid):
         choices = [k for k, v in rules.items() if all(i in v for i in col)]
         column_choices.append(choices)
 
+    departure = list()
     while any(i for i in column_choices):
         for i, c in enumerate(column_choices):
             if len(c) == 1:
