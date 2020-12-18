@@ -46,10 +46,8 @@ func traverse(
     bag string,
     seen map[string]bool) bool {
 
-    for k := range seen {
-        if bag == k {
-            return seen[bag]
-        }
+    if v, ok := seen[bag]; ok {
+        return v
     }
 
     for k := range bags[bag] {
@@ -76,11 +74,10 @@ func traverse2(
     bag string,
     seen map[string]int) int {
 
-    for k := range seen {
-        if bag == k {
-            return seen[bag]
-        }
+    if v, ok := seen[bag]; ok {
+        return v
     }
+
 
     n := 0
     for k := range bags[bag] {
