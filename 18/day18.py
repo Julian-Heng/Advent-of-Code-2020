@@ -47,7 +47,7 @@ def tokenize(eq):
     state = 1
     level = 0
 
-    for i, t in enumerate(eq):
+    for t in eq:
         if t == "(":
             level += 1
             if state == 1:
