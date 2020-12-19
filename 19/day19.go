@@ -1,11 +1,11 @@
 package main
 
 import (
+    "fmt"
     "io/ioutil"
     "os"
-    "fmt"
-    "strings"
     "strconv"
+    "strings"
 )
 
 
