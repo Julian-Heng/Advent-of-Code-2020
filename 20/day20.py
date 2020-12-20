@@ -30,7 +30,7 @@ def parse(lines):
 def solve1(tiles):
     n = isqrt(len(tiles))
     _grid = [[0] * n for _ in range(n)]
-    _solve(tiles, list(tiles.keys()), _grid, 0, 0)
+    _solve1(tiles, list(tiles.keys()), _grid, 0, 0)
     result = _grid[0][0][0]
     result *= _grid[0][-1][0]
     result *= _grid[-1][0][0] 
@@ -47,7 +47,7 @@ def solve1(tiles):
     return grid, result
 
 
-def _solve(tiles, available, grid, x, y):
+def _solve1(tiles, available, grid, x, y):
     if not available:
         return True
 
@@ -67,7 +67,7 @@ def _solve(tiles, available, grid, x, y):
             _x = 0 if x == len(grid) - 1 else x + 1
             _y = y + 1 if x == len(grid) - 1 else y
 
-            if _solve(tiles, available, grid, _x, _y):
+            if _solve1(tiles, available, grid, _x, _y):
                 return True
         available.append(t_id)
 
