@@ -23,7 +23,7 @@ func main() {
         os.Exit(1)
     }
 
-    foods, tally := parse(lines)
+    foods, tally := Parse(lines)
 
     p1, p2 := Solve(foods, tally)
     fmt.Println(p1)
@@ -130,7 +130,7 @@ func ReadLines(path string) ([]string, error) {
 }
 
 
-func parse(lines []string) ([]Food, map[string]int) {
+func Parse(lines []string) ([]Food, map[string]int) {
     foods := []Food{}
     tally := map[string]int{}
 
