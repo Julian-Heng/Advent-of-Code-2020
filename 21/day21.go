@@ -192,7 +192,7 @@ func StringSetIntersect(s1 StringSet, s2 StringSet) StringSet {
 func StringSetDifference(s1 StringSet, s2 StringSet) StringSet {
     s := StringSet{}
     for e := range s1 {
-        if ! StringSetContains(s2, e){
+        if ! StringSetContains(s2, e) {
             s[e] = struct{}{}
         }
     }
