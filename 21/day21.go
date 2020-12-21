@@ -44,7 +44,7 @@ func Solve(foods []Food, tally map[string]int) (int, string) {
     a_all := StringSetReduce(StringSetUnion, a_only, nil)
 
     p := []Food{}
-    for a_a := range a_all {
+    for _, a_a := range StringSetToSortedStringSlice(a_all) {
         valid := []StringSet{}
         for _, food := range foods {
             if StringSetContains(food.Allergens, a_a) {
@@ -155,6 +155,16 @@ func StringSetMake(a []string) StringSet {
         s[e] = struct{}{}
     }
     return s
+}
+
+
+func StringSetToSortedStringSlice(s StringSet) []string {
+    a := []string{}
+    for k := range s {
+        a = append(a, k)
+    }
+    sort.Strings(a)
+    return a
 }
 
 
