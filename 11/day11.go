@@ -32,8 +32,8 @@ func solve(
 	width int,
 	height int,
 	adjCallback func([]seat, int, int, int, int, func(seat) bool),
-	limit int) int {
-
+	limit int,
+) int {
 	after := make([]seat, len(Seats))
 	before := make([]seat, len(Seats))
 	copy(after, Seats)
@@ -83,8 +83,8 @@ func adjacentAt(
 	_y int,
 	w int,
 	h int,
-	callback func(seat) bool) {
-
+	callback func(seat) bool,
+) {
 	xmin := max(0, _x-1)
 	xmax := min(w, _x+2)
 	ymin := max(0, _y-1)
@@ -109,8 +109,8 @@ func adjacentAll(
 	_y int,
 	w int,
 	h int,
-	callback func(seat) bool) {
-
+	callback func(seat) bool,
+) {
 	directions := [][]int{
 		{-1, -1}, {0, -1}, {1, -1},
 		{-1, 0}, {1, 0},
@@ -135,8 +135,8 @@ func raycast(
 	y int,
 	dx int,
 	dy int,
-	t []seat) seat {
-
+	t []seat,
+) seat {
 	x += dx
 	y += dy
 	c := SeatFloor

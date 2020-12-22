@@ -40,8 +40,8 @@ func solve2(bags map[string]map[string]int) int {
 func traverse(
 	bags map[string]map[string]int,
 	bag string,
-	seen map[string]bool) bool {
-
+	seen map[string]bool,
+) bool {
 	if v, ok := seen[bag]; ok {
 		return v
 	}
@@ -67,8 +67,8 @@ func traverse(
 func traverse2(
 	bags map[string]map[string]int,
 	bag string,
-	seen map[string]int) int {
-
+	seen map[string]int,
+) int {
 	if v, ok := seen[bag]; ok {
 		return v
 	}
