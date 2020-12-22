@@ -1,190 +1,202 @@
 package main
 
 import (
-    "bufio"
-    "os"
-    "fmt"
-    "strconv"
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
 )
-
 
 type instruction int
+
 const (
-    INSTRUCTION_UNKNOWN     instruction = -1
-    INSTRUCTION_DIRECTION_N instruction = 0
-    INSTRUCTION_DIRECTION_E instruction = 1
-    INSTRUCTION_DIRECTION_S instruction = 2
-    INSTRUCTION_DIRECTION_W instruction = 3
-    INSTRUCTION_ROTATE_L    instruction = 4
-    INSTRUCTION_ROTATE_R    instruction = 5
-    INSTRUCTION_FORWARD     instruction = 6
+	instructionUnknown    instruction = -1
+	instructionDirectionN instruction = 0
+	instructionDirectionE instruction = 1
+	instructionDirectionS instruction = 2
+	instructionDirectionW instruction = 3
+	instructionRotateL    instruction = 4
+	instructionRotateR    instruction = 5
+	instructionForward    instruction = 6
 )
 
-
 type navigation struct {
-    action instruction
-    magnitude int
+	action    instruction
+	magnitude int
 }
-
 
 func main() {
-    navs, err := parse("input")
+	navs, err := parse("input")
 
-    if err != nil {
-        os.Exit(1)
-    }
+	if err != nil {
+		os.Exit(1)
+	}
 
-    fmt.Println(solve1(navs))
-    fmt.Println(solve2(navs))
+	fmt.Println(solve1(navs))
+	fmt.Println(solve2(navs))
 }
-
 
 func solve1(navs []navigation) int {
-    N := 0
-    E := 0
-    S := 0
-    W := 0
-    currentDir := INSTRUCTION_DIRECTION_E
+	N := 0
+	E := 0
+	S := 0
+	W := 0
+	currentDir := instructionDirectionE
 
-    for _, i := range navs {
-        action := i.action
-        magnitude := i.magnitude
+	for _, i := range navs {
+		action := i.action
+		magnitude := i.magnitude
 
-        switch action {
-        case INSTRUCTION_DIRECTION_N: N += magnitude
-        case INSTRUCTION_DIRECTION_E: E += magnitude
-        case INSTRUCTION_DIRECTION_S: S += magnitude
-        case INSTRUCTION_DIRECTION_W: W += magnitude
-        case INSTRUCTION_ROTATE_L:
-            for i := 0; i < (magnitude / 90); i++ {
-                switch currentDir {
-                case INSTRUCTION_DIRECTION_N:
-                    currentDir = INSTRUCTION_DIRECTION_W
-                case INSTRUCTION_DIRECTION_E:
-                    currentDir = INSTRUCTION_DIRECTION_N
-                case INSTRUCTION_DIRECTION_S:
-                    currentDir = INSTRUCTION_DIRECTION_E
-                case INSTRUCTION_DIRECTION_W:
-                    currentDir = INSTRUCTION_DIRECTION_S
-                }
-            }
-        case INSTRUCTION_ROTATE_R:
-            for i := 0; i < (magnitude / 90); i++ {
-                switch currentDir {
-                case INSTRUCTION_DIRECTION_N:
-                    currentDir = INSTRUCTION_DIRECTION_E
-                case INSTRUCTION_DIRECTION_E:
-                    currentDir = INSTRUCTION_DIRECTION_S
-                case INSTRUCTION_DIRECTION_S:
-                    currentDir = INSTRUCTION_DIRECTION_W
-                case INSTRUCTION_DIRECTION_W:
-                    currentDir = INSTRUCTION_DIRECTION_N
-                }
-            }
-        case INSTRUCTION_FORWARD:
-            switch currentDir {
-            case INSTRUCTION_DIRECTION_N: N += magnitude
-            case INSTRUCTION_DIRECTION_E: E += magnitude
-            case INSTRUCTION_DIRECTION_S: S += magnitude
-            case INSTRUCTION_DIRECTION_W: W += magnitude
-            }
-        }
-    }
+		switch action {
+		case instructionDirectionN:
+			N += magnitude
+		case instructionDirectionE:
+			E += magnitude
+		case instructionDirectionS:
+			S += magnitude
+		case instructionDirectionW:
+			W += magnitude
+		case instructionRotateL:
+			for i := 0; i < (magnitude / 90); i++ {
+				switch currentDir {
+				case instructionDirectionN:
+					currentDir = instructionDirectionW
+				case instructionDirectionE:
+					currentDir = instructionDirectionN
+				case instructionDirectionS:
+					currentDir = instructionDirectionE
+				case instructionDirectionW:
+					currentDir = instructionDirectionS
+				}
+			}
+		case instructionRotateR:
+			for i := 0; i < (magnitude / 90); i++ {
+				switch currentDir {
+				case instructionDirectionN:
+					currentDir = instructionDirectionE
+				case instructionDirectionE:
+					currentDir = instructionDirectionS
+				case instructionDirectionS:
+					currentDir = instructionDirectionW
+				case instructionDirectionW:
+					currentDir = instructionDirectionN
+				}
+			}
+		case instructionForward:
+			switch currentDir {
+			case instructionDirectionN:
+				N += magnitude
+			case instructionDirectionE:
+				E += magnitude
+			case instructionDirectionS:
+				S += magnitude
+			case instructionDirectionW:
+				W += magnitude
+			}
+		}
+	}
 
-    return abs(N - S) + abs(E - W)
+	return abs(N-S) + abs(E-W)
 }
-
 
 func solve2(navs []navigation) int {
-    WN := 1
-    WE := 10
-    WS := 0
-    WW := 0
+	WN := 1
+	WE := 10
+	WS := 0
+	WW := 0
 
-    N := 0
-    E := 0
-    S := 0
-    W := 0
+	N := 0
+	E := 0
+	S := 0
+	W := 0
 
-    for _, i := range navs {
-        action := i.action
-        magnitude := i.magnitude
+	for _, i := range navs {
+		action := i.action
+		magnitude := i.magnitude
 
-        switch action {
-        case INSTRUCTION_DIRECTION_N: WN += magnitude
-        case INSTRUCTION_DIRECTION_E: WE += magnitude
-        case INSTRUCTION_DIRECTION_S: WS += magnitude
-        case INSTRUCTION_DIRECTION_W: WW += magnitude
-        case INSTRUCTION_ROTATE_L:
-            for i := 0; i < (magnitude / 90); i++ {
-                tmp := WN
-                WN = WE
-                WE = WS
-                WS = WW
-                WW = tmp
-            }
-        case INSTRUCTION_ROTATE_R:
-            for i := 0; i < (magnitude / 90); i++ {
-                tmp := WN
-                WN = WW
-                WW = WS
-                WS = WE
-                WE = tmp
-            }
-        case INSTRUCTION_FORWARD:
-            N += WN * magnitude
-            E += WE * magnitude
-            S += WS * magnitude
-            W += WW * magnitude
-        }
-    }
+		switch action {
+		case instructionDirectionN:
+			WN += magnitude
+		case instructionDirectionE:
+			WE += magnitude
+		case instructionDirectionS:
+			WS += magnitude
+		case instructionDirectionW:
+			WW += magnitude
+		case instructionRotateL:
+			for i := 0; i < (magnitude / 90); i++ {
+				tmp := WN
+				WN = WE
+				WE = WS
+				WS = WW
+				WW = tmp
+			}
+		case instructionRotateR:
+			for i := 0; i < (magnitude / 90); i++ {
+				tmp := WN
+				WN = WW
+				WW = WS
+				WS = WE
+				WE = tmp
+			}
+		case instructionForward:
+			N += WN * magnitude
+			E += WE * magnitude
+			S += WS * magnitude
+			W += WW * magnitude
+		}
+	}
 
-    return abs(N - S) + abs(E - W)
+	return abs(N-S) + abs(E-W)
 }
-
 
 func parse(path string) ([]navigation, error) {
-    navs := []navigation{}
-    file, err := os.Open(path)
+	navs := []navigation{}
+	file, err := os.Open(path)
 
-    if err != nil {
-        return navs, err
-    }
+	if err != nil {
+		return navs, err
+	}
 
-    defer file.Close()
+	defer file.Close()
 
-    scanner := bufio.NewScanner(file)
-    for scanner.Scan() {
-        line := scanner.Text()
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
 
-        action := INSTRUCTION_UNKNOWN
-        magnitude, err := strconv.Atoi(line[1:])
+		action := instructionUnknown
+		magnitude, err := strconv.Atoi(line[1:])
 
-        if err != nil {
-            return navs, err
-        }
+		if err != nil {
+			return navs, err
+		}
 
-        switch line[0] {
-        case 'N': action = INSTRUCTION_DIRECTION_N
-        case 'E': action = INSTRUCTION_DIRECTION_E
-        case 'S': action = INSTRUCTION_DIRECTION_S
-        case 'W': action = INSTRUCTION_DIRECTION_W
-        case 'L': action = INSTRUCTION_ROTATE_L
-        case 'R': action = INSTRUCTION_ROTATE_R
-        case 'F': action = INSTRUCTION_FORWARD
-        }
+		switch line[0] {
+		case 'N':
+			action = instructionDirectionN
+		case 'E':
+			action = instructionDirectionE
+		case 'S':
+			action = instructionDirectionS
+		case 'W':
+			action = instructionDirectionW
+		case 'L':
+			action = instructionRotateL
+		case 'R':
+			action = instructionRotateR
+		case 'F':
+			action = instructionForward
+		}
 
-        navs = append(navs, navigation{action, magnitude})
-    }
+		navs = append(navs, navigation{action, magnitude})
+	}
 
-    return navs, scanner.Err()
+	return navs, scanner.Err()
 }
 
-
 func abs(n int) int {
-    if n < 0 {
-        return -n
-    } else {
-        return n
-    }
+	if n < 0 {
+		return -n
+	}
+	return n
 }
