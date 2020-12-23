@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from collections import deque
-
 
 def main():
     with open("input", "r") as f:
