@@ -245,6 +245,7 @@ func makeTiledata(lines []string, borderCheck bool) ([]tileData, error) {
 			switch c {
 			case '#':
 				row = append(row, pixelOn)
+
 			default:
 				row = append(row, pixelOff)
 			}

@@ -60,8 +60,10 @@ func solve(tokens []string, version int) int {
 				switch op {
 				case "+":
 					result += n
+
 				case "-":
 					result -= n
+
 				case "*":
 					result *= n
 				}

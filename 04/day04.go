@@ -82,6 +82,7 @@ func (p passport) Validate(extended bool) bool {
 	switch p.ecl {
 	case "amb", "blu", "brn", "gry", "grn", "hzl", "oth":
 		break
+
 	default:
 		return false
 	}

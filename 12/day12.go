@@ -50,46 +50,61 @@ func solve1(navs []navigation) int {
 		switch action {
 		case instructionDirectionN:
 			N += magnitude
+
 		case instructionDirectionE:
 			E += magnitude
+
 		case instructionDirectionS:
 			S += magnitude
+
 		case instructionDirectionW:
 			W += magnitude
+
 		case instructionRotateL:
 			for i := 0; i < (magnitude / 90); i++ {
 				switch currentDir {
 				case instructionDirectionN:
 					currentDir = instructionDirectionW
+
 				case instructionDirectionE:
 					currentDir = instructionDirectionN
+
 				case instructionDirectionS:
 					currentDir = instructionDirectionE
+
 				case instructionDirectionW:
 					currentDir = instructionDirectionS
 				}
 			}
+
 		case instructionRotateR:
 			for i := 0; i < (magnitude / 90); i++ {
 				switch currentDir {
 				case instructionDirectionN:
 					currentDir = instructionDirectionE
+
 				case instructionDirectionE:
 					currentDir = instructionDirectionS
+
 				case instructionDirectionS:
 					currentDir = instructionDirectionW
+
 				case instructionDirectionW:
 					currentDir = instructionDirectionN
 				}
 			}
+
 		case instructionForward:
 			switch currentDir {
 			case instructionDirectionN:
 				N += magnitude
+
 			case instructionDirectionE:
 				E += magnitude
+
 			case instructionDirectionS:
 				S += magnitude
+
 			case instructionDirectionW:
 				W += magnitude
 			}
@@ -117,12 +132,16 @@ func solve2(navs []navigation) int {
 		switch action {
 		case instructionDirectionN:
 			WN += magnitude
+
 		case instructionDirectionE:
 			WE += magnitude
+
 		case instructionDirectionS:
 			WS += magnitude
+
 		case instructionDirectionW:
 			WW += magnitude
+
 		case instructionRotateL:
 			for i := 0; i < (magnitude / 90); i++ {
 				tmp := WN
@@ -131,6 +150,7 @@ func solve2(navs []navigation) int {
 				WS = WW
 				WW = tmp
 			}
+
 		case instructionRotateR:
 			for i := 0; i < (magnitude / 90); i++ {
 				tmp := WN
@@ -139,6 +159,7 @@ func solve2(navs []navigation) int {
 				WS = WE
 				WE = tmp
 			}
+
 		case instructionForward:
 			N += WN * magnitude
 			E += WE * magnitude
@@ -174,16 +195,22 @@ func parse(path string) ([]navigation, error) {
 		switch line[0] {
 		case 'N':
 			action = instructionDirectionN
+
 		case 'E':
 			action = instructionDirectionE
+
 		case 'S':
 			action = instructionDirectionS
+
 		case 'W':
 			action = instructionDirectionW
+
 		case 'L':
 			action = instructionRotateL
+
 		case 'R':
 			action = instructionRotateR
+
 		case 'F':
 			action = instructionForward
 		}

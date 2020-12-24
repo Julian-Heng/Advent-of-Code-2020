@@ -31,6 +31,7 @@ func solve1(nums []int) int {
 		switch nums[j] - nums[i] {
 		case 1:
 			one++
+
 		case 3:
 			three++
 		}

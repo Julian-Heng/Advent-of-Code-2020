@@ -80,6 +80,7 @@ func solve2(instructions []instruction) int {
 		switch original.op {
 		case nop:
 			modified.op = jmp
+
 		case jmp:
 			modified.op = nop
 		}

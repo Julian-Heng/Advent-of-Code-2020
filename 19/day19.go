@@ -57,6 +57,7 @@ func match(rules map[int]rule, rule int, s string) (bool, int) {
 	switch rr.rType {
 	case ruleRootA:
 		return s[0] == 'a', btoi(s[0] == 'a')
+
 	case ruleRootB:
 		return s[0] == 'b', btoi(s[0] == 'b')
 	}
@@ -114,6 +115,7 @@ func parse(s string) (map[int]rule, map[int]rule, []string) {
 					switch r[1] {
 					case 'a':
 						rType = ruleRootA
+
 					case 'b':
 						rType = ruleRootB
 					}
