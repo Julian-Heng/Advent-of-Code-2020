@@ -53,13 +53,14 @@ def solve2(tiles, iterations=100):
                 _tiles.append(point)
 
         tiles = set(_tiles)
+
     return len(tiles)
 
 
 def get_adjacent(point):
     c, r = point
-    dirs = ("e", "se", "sw", "w", "nw", "ne")
-    adj = [(c, r)]
+    adj = list()
+    dirs = ("", "e", "se", "sw", "w", "nw", "ne")
     for d in dirs:
         dc, dr = get_delta(d, c, r)
         adj.append((c + dc, r + dr))
@@ -69,7 +70,9 @@ def get_adjacent(point):
 def get_delta(d, c, r):
     dc = 0
     dr = 0
-    if d == "w":
+    if d == "":
+        return dc, dr
+    elif d == "w":
         dc = -1
     elif d == "e":
         dc = 1
@@ -85,6 +88,7 @@ def get_delta(d, c, r):
             dc = 1 if offset else 0
 
     return dc, dr
+
 
 if __name__ == "__main__":
     main()
