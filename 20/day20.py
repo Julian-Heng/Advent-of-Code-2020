@@ -2,7 +2,22 @@
 
 import re
 
-from math import isqrt
+try:
+    from math import isqrt
+except ImportError:
+    def isqrt(n):
+        if n > 0:
+            x = 1 << (n.bit_length() + 1 >> 1)
+            while True:
+                y = (x + n // x) >> 1
+                if y >= x:
+                    return x
+                x = y
+        elif n == 0:
+            return 0
+        else:
+            raise ValueError("n must be nonnegative")
+
 from itertools import chain
 
 
