@@ -85,17 +85,12 @@ func _solve2(
 		k[0] = intSliceCopy(p1)
 		k[1] = intSliceCopy(p2)
 
-		found := false
 		for _, s := range seen {
 			if intSliceEqual(s[0], k[0]) && intSliceEqual(s[1], k[1]) {
-				found = true
-				break
+				return p1, []int{}
 			}
 		}
 
-		if found {
-			return p1, []int{}
-		}
 		seen = append(seen, k)
 
 		a := p1[0]
